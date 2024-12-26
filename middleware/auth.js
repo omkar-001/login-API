@@ -1,14 +1,33 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
+/**
+ * Authentication Middleware
+ * Verifies JWT token from request headers and adds user data to request
+ *
+ * Header format: Authorization: Bearer <token>
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ */
 const auth = (req, res, next) => {
   try {
-    const token = req.header('Authorization').replace('Bearer ', '');
+    // Extract token from Authorization header and remove 'Bearer ' prefix
+    const token = req.header("Authorization").replace("Bearer ", "");
+
+    // Verify token using JWT_SECRET from environment variables
+    // If token is invalid or expired, this will throw an error
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Add decoded user data to request object for use in route handlers
     req.user = decoded;
+
+    // Continue to next middleware or route handler
     next();
   } catch (error) {
-    res.status(401).send({ error: 'Please authenticate.' });
+    // Handle authentication errors (invalid/expired token, no token provided)
+    res.status(401).send({ error: "Please authenticate." });
   }
 };
 
-export default auth; 
+export default auth;
