@@ -1,5 +1,7 @@
 import db from "../models/index.js";
 import bcrypt from "bcrypt";
+import { httpMessage, httpStatus } from "../config/http.js";
+import { responseSuccess, responseError } from "../utility/response.js";
 
 const { User } = db;
 
@@ -13,12 +15,9 @@ export const registerController = async (req, res) => {
       password: hashedPassword,
       age,
     });
-    res.send(user);
+    responseSuccess(res, httpMessage.success, user);
   } catch (error) {
-    res.status(400).send({
-      error: "Registration failed",
-      details: error.message,
-    });
+    responseError(res, httpMessage.notFound, httpStatus.forbidden, error);
   }
 };
 

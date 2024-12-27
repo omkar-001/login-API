@@ -1,18 +1,22 @@
-// ===== IMPORTS =====
-// Core framework and middleware imports
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 
-// Custom middleware imports
 import logger from "./middleware/logger.js";
 
-// Database and authentication imports
 import routes from "./routes/routes.js";
-// ===== CONFIGURATION =====
+
 dotenv.config(); // Load environment variables
 const app = express(); // Initialize Express app
+// (async () => {
+//   try {
+//     await db.sequelize.sync({ alter: true }); // Alter will ensure the table matches the model
+//     console.log("Database synchronized successfully");
+//   } catch (error) {
+//     console.error("Error syncing database:", error);
+//   }
+// })();
 
 // ===== MIDDLEWARE =====
 app.use(express.json()); // Parse JSON request bodies

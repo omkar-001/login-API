@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { config } from "dotenv";
 import UserModel from "./user.js";
+import ResetUserModel from "./resetuser.js";
 
 /**
  * Database Configuration and Model Initialization
@@ -44,6 +45,6 @@ db.Sequelize = Sequelize;
 
 // Initialize models
 db.User = UserModel(sequelize, DataTypes);
-
+db.ResetUser = ResetUserModel(sequelize, DataTypes);
 // Export database object with models
 export default db;

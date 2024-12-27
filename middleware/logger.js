@@ -1,5 +1,5 @@
 const logger = (req, res, next) => {
-  console.log(`${req.method} ${req.path} `);
+  console.log(`\n--------------${req.method} ${req.path} --------------\n`);
   next();
 };
 
