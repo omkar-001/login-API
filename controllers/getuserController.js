@@ -61,6 +61,10 @@ export const getUserSortedController = async (req, res) => {
   }
 };
 
+export const getHomeController = async (req, res) => {
+  responseSuccess(res, httpMessage.success, "Hello World");
+};
+
 export const testusers = async (req, res) => {
   // const users = await User.findAll({
   //   attributes: [

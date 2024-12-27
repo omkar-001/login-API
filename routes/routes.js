@@ -5,6 +5,7 @@ import {
   testusers,
   getUserController,
   getUserSortedController,
+  getHomeController,
 } from "../controllers/getuserController.js";
 import { registerController } from "../controllers/registerController.js";
 import { loginController } from "../controllers/authController.js";
@@ -15,6 +16,7 @@ import {
 
 const router = Router();
 
+router.get("/", getHomeController);
 router.get("/justforme", testusers);
 router.get("/users", auth, getUserController);
 router.post("/register", registerController);
