@@ -4,6 +4,7 @@ import { dirname } from "path";
 import { config } from "dotenv";
 import UserModel from "./user.js";
 import ResetUserModel from "./resetuser.js";
+import logger from "../config/logger.js";
 
 /**
  * Database Configuration and Model Initialization
@@ -33,6 +34,7 @@ const sequelize = new Sequelize(
     //   acquire: 30000,
     //   idle: 10000
     // }
+    logging: (msg) => logger.info(msg), // Changed to info level since debug level messages won't show by default
   }
 );
 

@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
-
-import logger from "./middleware/logger.js";
+import logger, { loggerMiddleware } from "./config/logger.js";
 
 import routes from "./routes/routes.js";
 
@@ -22,7 +21,8 @@ const app = express(); // Initialize Express app
 app.use(express.json()); // Parse JSON request bodies
 app.use(cors()); // Enable Cross-Origin Resource Sharing
 app.use(helmet()); // Add security headers
-app.use(logger); // Custom request logging
+// Custom request logging
+app.use(loggerMiddleware);
 
 /* Database sync code (commented out for production)
 
@@ -40,5 +40,5 @@ app.use("/", routes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT}`);
 });

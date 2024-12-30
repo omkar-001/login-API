@@ -1,4 +1,5 @@
 import { httpMessage, httpStatus } from "../config/http.js";
+import logger from "../config/logger.js";
 
 const responseSuccess = (res, message, data, code = httpStatus.ok) => {
   const response = {
@@ -6,6 +7,7 @@ const responseSuccess = (res, message, data, code = httpStatus.ok) => {
     message,
     data,
   };
+  logger.info(JSON.stringify(response));
   return res.status(code).json(response);
 };
 
@@ -20,6 +22,8 @@ const responseFail = (
     message,
     errors,
   };
+  logger.error(JSON.stringify(response));
+  // res.send(response);
   return res.status(code).json(response);
 };
 
@@ -34,6 +38,8 @@ const responseError = (
     message,
     errors,
   };
+  logger.error(JSON.stringify(response));
+
   return res.status(code).json(response);
 };
 

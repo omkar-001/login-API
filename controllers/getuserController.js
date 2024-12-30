@@ -9,6 +9,22 @@ import { httpMessage, httpStatus } from "../config/http.js";
 import { pagination } from "../config/helper.js";
 const { User } = db;
 
+export const index = async (req, res) => {
+  try {
+    const { limit, offset } = await pagination(req);
+
+    const users = await User.findAll({
+      attributes: ["id", "name", "email", "age"],
+      limit: limit,
+      offset: offset,
+    });
+
+    responseSuccess(res, httpMessage.success, users);
+  } catch (error) {
+    responseError(res, httpMessage.notFound, httpStatus.forbidden, error);
+  }
+};
+
 export const getUserController = async (req, res) => {
   try {
     const { limit, offset } = await pagination(req);
