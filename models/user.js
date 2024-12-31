@@ -10,15 +10,8 @@ import { Model } from "sequelize";
  */
 export default (sequelize, DataTypes) => {
   // Define User class extending Sequelize Model
-  class User extends Model {
-    /**
-     * Define model associations here if needed
-     * Example: User.hasMany(models.Post)
-     */
-    // static associate(models) {}
-  }
+  class User extends Model {}
 
-  // Initialize User model with its schema
   User.init(
     {
       // Primary Key - Auto-incrementing ID
@@ -51,8 +44,6 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true, // Age is optional
       },
-      // createdAt and updatedAt are automatically added by Sequelize
-      // unless timestamps: false is set in the options
     },
     {
       sequelize,

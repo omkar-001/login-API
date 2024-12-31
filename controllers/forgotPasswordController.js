@@ -6,6 +6,7 @@ import { Op } from "sequelize";
 import { sendEmail } from "../config/helper.js";
 import bcrypt from "bcrypt";
 const { User, ResetUser } = db;
+import emailQueue from "../job/emailjob.js";
 
 export const forgotPasswordController = async (req, res) => {
   try {
@@ -26,7 +27,7 @@ export const forgotPasswordController = async (req, res) => {
 
     const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
 
-    await sendEmail(user, resetUrl);
+    await emailQueue.add({ user, resetUrl });
 
     responseSuccess(res, "Password reset link sent", {
       message: "Sent you a mail to reset password",

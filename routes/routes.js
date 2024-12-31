@@ -1,5 +1,6 @@
 import { Router } from "express";
 import auth from "../middleware/auth.js";
+import { checkUserRole } from "../middleware/checkuser.js";
 
 import {
   testusers,
@@ -26,10 +27,10 @@ router.post("/login", loginController);
 router.post("/forgot-password", forgotPasswordController);
 router.post("/reset-password", resetPasswordController);
 
-router.get("/users", auth, getUserController);
-router.get("/users/sorted", auth, getUserSortedController);
-router.delete("/users", auth, deleteUser);
+router.get("/users", auth, checkUserRole, getUserController);
+router.get("/users/sorted", auth, checkUserRole, getUserSortedController);
+router.delete("/users", auth, checkUserRole, deleteUser);
 
-router.put("/users", auth, updateUser);
+router.put("/users", auth, checkUserRole, updateUser);
 
 export default router;

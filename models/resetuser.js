@@ -29,6 +29,7 @@ export default (sequelize, DataTypes) => {
       sequelize,
       modelName: "ResetUser",
       tableName: "ResetUsers",
+      paranoid: true,
     }
   );
   return ResetUser;

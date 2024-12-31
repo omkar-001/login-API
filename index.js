@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import logger, { loggerMiddleware } from "./config/logger.js";
-
+import db from "./models/index.js";
 import routes from "./routes/routes.js";
 
 dotenv.config(); // Load environment variables
