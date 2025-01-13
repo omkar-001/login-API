@@ -5,6 +5,10 @@ import { config } from "dotenv";
 import UserModel from "./user.js";
 import ResetUserModel from "./resetuser.js";
 import logger from "../config/logger.js";
+import ModuleModel from "./module.js";
+import ModuleActionModel from "./moduleAction.js";
+import RoleActionPermissionModel from "./roleActionPermission.js";
+import RoleModel from "./roles.js";
 
 /**
  * Database Configuration and Model Initialization
@@ -48,5 +52,17 @@ db.Sequelize = Sequelize;
 // Initialize models
 db.User = UserModel(sequelize, DataTypes);
 db.ResetUser = ResetUserModel(sequelize, DataTypes);
+db.Module = ModuleModel(sequelize, DataTypes);
+db.ModuleAction = ModuleActionModel(sequelize, DataTypes);
+db.Role = RoleModel(sequelize, DataTypes);
+db.RoleActionPermission = RoleActionPermissionModel(sequelize, DataTypes);
+
+// Initialize associations
+Object.values(db).forEach((model) => {
+  if (model.associate) {
+    model.associate(db);
+  }
+});
+
 // Export database object with models
 export default db;

@@ -10,7 +10,15 @@ import { Model } from "sequelize";
  */
 export default (sequelize, DataTypes) => {
   // Define User class extending Sequelize Model
-  class User extends Model {}
+  class User extends Model {
+    static associate(models) {
+      // Define association with Role model
+      User.belongsTo(models.Role, {
+        foreignKey: "role_id",
+        as: "role",
+      });
+    }
+  }
 
   User.init(
     {
@@ -43,6 +51,15 @@ export default (sequelize, DataTypes) => {
       age: {
         type: DataTypes.INTEGER,
         allowNull: true, // Age is optional
+      },
+      role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 3,
+        references: {
+          model: "roles",
+          key: "id",
+        },
       },
     },
     {

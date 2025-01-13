@@ -1,6 +1,7 @@
 import { Router } from "express";
 import auth from "../middleware/auth.js";
 import { checkUserRole } from "../middleware/checkuser.js";
+import { checkPermission } from "../middleware/checkPermission.js";
 
 import {
   testusers,
@@ -16,6 +17,7 @@ import {
 } from "../controllers/forgotPasswordController.js";
 import { deleteUser } from "../controllers/deleteuserController.js";
 import { updateUser } from "../controllers/updateUserController.js";
+import { createUserController } from "../controllers/createUserController.js";
 
 const router = Router();
 
@@ -27,10 +29,23 @@ router.post("/login", loginController);
 router.post("/forgot-password", forgotPasswordController);
 router.post("/reset-password", resetPasswordController);
 
-router.get("/users", auth, checkUserRole, getUserController);
-router.get("/users/sorted", auth, checkUserRole, getUserSortedController);
-router.delete("/users", auth, checkUserRole, deleteUser);
+router.get("/users", auth, checkPermission("users", "view"), getUserController);
+router.get(
+  "/users/sorted",
+  auth,
+  checkPermission("users", "view"),
+  getUserSortedController
+);
 
-router.put("/users", auth, checkUserRole, updateUser);
+router.delete("/users", auth, checkPermission("users", "delete"), deleteUser);
+
+router.put("/users", auth, checkPermission("users", "update"), updateUser);
+
+router.post(
+  "/users",
+  auth,
+  checkPermission("users", "create"),
+  createUserController
+);
 
 export default router;
